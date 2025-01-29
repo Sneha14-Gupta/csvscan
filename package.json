@@ -1,17 +1,19 @@
 {
-  "name": "leadsync",
+  "name": "csvscan",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
+  "description": "a cli tool to scan and validate csv files",
   "main": "main.js",
   "scripts": {
-    "dev": "node --watch main.js --env-file=.env --input=companies.csv --output=clean.csv --report=report.csv",
+    "dev": "node --watch main.js  --input=companies.csv --output=final.csv --report=errors.csv",
     "test": "vitest"
-    
+  },
+  "bin": {
+    "csvscan": "./main.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "nodemon": "^3.1.9",
     "papaparse": "^5.5.1",
