@@ -1,6 +1,6 @@
 {
   "name": "csvscan",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "description": "a cli tool to scan and validate csv files",
   "main": "main.js",
@@ -15,6 +15,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@clack/prompts": "^0.9.1",
     "nodemon": "^3.1.9",
     "papaparse": "^5.5.1",
     "validator": "^13.12.0",

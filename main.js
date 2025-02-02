@@ -1,27 +1,39 @@
 #!/usr/bin/env node
-
-import { readCSV, writeCSV } from "./lib/io.js";
+import { intro, outro, log} from "@clack/prompts";
 import core from "./lib/core.js";
+import prompt from "./lib/prompt.js";
+import { readCSV, writeCSV } from "./lib/io.js";
 
-// Handling CLI Arguments
-import yargs from "yargs/yargs";
-import { hideBin } from "yargs/helpers";
-const argv = yargs(hideBin(process.argv)).argv;
+async function main() {
+  intro(`CSVSCAN start your csv validation`);
 
+  const { input, output, errors: errorsFile } = await prompt();
 
+  // const s = spinner();
 
-function main() {
-  const csvData = readCSV(argv.input);
+  log.success(input);
+  log.success(output);
+  log.success(errorsFile);
+
+  // s.start("Reading the file");
+
+  const csvData = readCSV(input);
   const [clean, errors] = core(csvData.body);
-  console.log("Validation rules complete ✅");
+
+  log.success("Validation rules complete ✅");
+
+  // s.start("Creating new files");
 
   // Generate clean csv
-  writeCSV(argv.output, clean);
-  console.log("Write to clean done ✅");
+  writeCSV(output, clean);
+  log.success("Write to clean done ✅");
 
   // Generate report
-  writeCSV(argv.report, errors);
-  console.log("Generated report successfully! ✅");
+  writeCSV(errorsFile, errors);
+  log.success("Generated report successfully! ✅");
+
+  // s.stop();
+  outro("You're done!");
 }
 
-main();
+await main();
