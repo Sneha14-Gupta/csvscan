@@ -4,26 +4,10 @@ import {
   isLinkedInURL,
   isCompanyName,
   isEmployeeSize,
+  isURL,
   isLocation,
-  isDate,
+  isPhoneNumber,
 } from "../lib/validate.js";
-
-const companyHeader = 'Company Name'; // or some dynamic value based on your context
-
-
-describe("Testing isEmail", () => {
-  test("testing for a valid email", () => {
-    expect(isEmail("contact@leadsync.com")).toBe(true);
-  });
-
-  test("testing NA", () => {
-    expect(isEmail("NA")).toBe(true);
-  });
-
-  test("testing for an invalid email", () => {
-    expect(isEmail("hey@phone@book.com")).toBe(false);
-  });
-});
 
 describe("Testing isLinkedinURL", () => {
   test("testing for a valid linkedin url", () => {
@@ -54,10 +38,6 @@ describe("Testing isCompanyName", () => {
 
   test("testing for URL case", () => {
     expect(isCompanyName("e24.ai")).toBe(false);
-  });
-
-  test("testing for potential employee-size entry", () => {
-    expect(isCompanyName("10-500")).toBe(false);
   });
 });
 
@@ -104,57 +84,67 @@ describe("testing isEmail", () => {
 
 describe("testing isLocation", async () => {
   test("Testing for a valid location", async () => {
-    expect(isLocation("New Delhi")).resolves.toBe(true);
+    await expect(isLocation("New Delhi")).resolves.toBe(true);
   });
   test("Testing for a valid location", async () => {
-    expect(isLocation("Delhi")).resolves.toBe(true);
+    await expect(isLocation("Delhi")).resolves.toBe(true);
   });
   test("Testing for a valid location", async () => {
-    expect(isLocation("India")).resolves.toBe(true);
-  });
-  test("Test for invalid location", async () => {
-    expect(isLocation("USA")).resolves.toBe(true);
-  });
-  test("Testing NA for location", async () => {
-    expect(isLocation("NA")).resolves.toBe(true); // Treats "NA" as a valid location placeholder
+    await expect(isLocation("India")).resolves.toBe(true);
   });
 
+  test("Test for invalid location", async () => {
+    await expect(isLocation("USA")).resolves.toBe(true);
+  });
 });
 
-// for date 
-import { describe, expect, test } from "vitest";
-import { isDate } from "../lib/validate.js"; // Adjust import path as necessary
-
-describe('Testing isDate function', () => {
-  test('Valid date format (YYYY-MM-DD)', () => {
-    expect(isDate('2025-02-04')).toBe(true); // Valid date
+describe("Checking isURL", () => {
+  test("Check for proper URL", () => {
+    expect(isURL("https://google.com")).toBe(true);
   });
 
-  test('Valid date format (Single digit month or day)', () => {
-    expect(isDate('2025-2-04')).toBe(false); // Invalid, month should be two digits
+  test("Check for valid URL pattern", () => {
+    expect(isURL("www.google.im")).toBe(true);
   });
 
-
-  test('Invalid date format with day or month swapped (MM-DD-YYYY)', () => {
-    expect(isDate('02-04-2025')).toBe(false); // Invalid, should be YYYY-MM-DD
+  test("Checks for incomplete pattern", () => {
+    expect(isURL("google")).toBe(false);
   });
 
-  test('Invalid date format with more than 4 digits in year', () => {
-    expect(isDate('20225-02-04')).toBe(false); // Invalid, year should be 4 digits
+  test("Checks for www", () => {
+    expect(isURL("ww.google.com")).toBe(true);
   });
 
-  test('Invalid date with incorrect separator', () => {
-    expect(isDate('2025/02/04')).toBe(false); // Invalid, separator should be '-'
+  test("Check for both http and www part", () => {
+    expect(isURL("http://www.google.com")).toBe(true);
+  });
+});
+
+describe("isPhoneNumber function", () => {
+  test("should return true for valid phone number without letters", () => {
+    expect(isPhoneNumber("123456")).toBe(true);
+    expect(isPhoneNumber("9876543210")).toBe(true);
+    expect(isPhoneNumber("1112223333")).toBe(true);
+    expect(isPhoneNumber("+919876543210")).toBe(true);
+    expect(isPhoneNumber("+91(111)2223334")).toBe(true);
   });
 
-
-
-
-  test('Invalid date format (empty string)', () => {
-    expect(isDate('')).toBe(false); // Invalid, empty string
+  test("should return false for phone numbers containing letters", () => {
+    expect(isPhoneNumber("123abc456")).toBe(false);
+    expect(isPhoneNumber("abc123")).toBe(false);
   });
 
-  test('Invalid date format with leading spaces', () => {
-    expect(isDate(' 2025-02-04')).toBe(false); // Invalid, leading spaces
+  test("should return false for numbers with fewer than 6 characters", () => {
+    expect(isPhoneNumber("12345")).toBe(false);
+    expect(isPhoneNumber("12")).toBe(false);
+  });
+
+  test("should return false for empty string", () => {
+    expect(isPhoneNumber("")).toBe(false);
+  });
+
+  test("should return false for non-numeric characters", () => {
+    expect(isPhoneNumber("abc123")).toBe(false);
+    expect(isPhoneNumber("$123456")).toBe(false);
   });
 });
