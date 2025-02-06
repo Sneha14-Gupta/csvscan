@@ -9,6 +9,9 @@
     "start": "node main.js",
     "test": "vitest"
   },
+   "bin":{
+        "csvscan": "./main.js"
+    },
   "keywords": [
     "csv",
     "scan",
