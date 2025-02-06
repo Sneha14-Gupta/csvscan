@@ -1,32 +1,33 @@
 {
-  "name": "csvguard",
+  "name": "csvscan",
   "version": "1.0.4",
   "type": "module",
   "description": "CSV validating tool",
   "main": "index.js",
   "scripts": {
-      "dev": "node main.js -i companies.csv -o final.csv -r report.csv",
-      "start": "node main.js",
-      "test": "vitest"
+    "dev": "node main.js -i companies.csv -o final.csv -r report.csv",
+    "start": "node main.js",
+    "test": "vitest"
   },
   "keywords": [
-      "csv",
-      "guard",
-      "csvguard",
-      "validation"
+    "csv",
+    "scan",
+    "csvscan",
+    "validation"
   ],
-  "author": "advaitparab12",
+  "author": "snehagupta",
   "license": "MIT",
   "dependencies": {
-      "@clack/prompts": "^0.9.1",
-      "chalk": "^5.4.1",
-      "leadsync": "^1.0.8",
-      "node-fetch": "^3.3.2",
-      "papaparse": "^5.5.1",
-      "validator": "^13.12.0",
-      "yargs": "^17.7.2"
+    "@clack/prompts": "^0.9.1",
+    "chalk": "^5.4.1",
+    "csvguard": "^1.0.4",
+    "leadsync": "^1.0.8",
+    "node-fetch": "^3.3.2",
+    "papaparse": "^5.5.1",
+    "validator": "^13.12.0",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
-      "vitest": "^3.0.5"
+    "vitest": "^3.0.5"
   }
 }

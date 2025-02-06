@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { intro, spinner, log, outro } from "@clack/prompts";
+import { intro,  log, outro } from "@clack/prompts";
 import { readCSV, writeCSV } from "./lib/io.js";
 import chalk from "chalk";
 import prompt from "./lib/prompt.js";
